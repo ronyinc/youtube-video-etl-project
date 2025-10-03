@@ -1,0 +1,22 @@
+# secrets
+.env
+*.pem
+*.key
+*.p12
+*.jks
+**/credentials.json
+**/service_account.json
+
+# airflow
+logs/
+dags/__pycache__/
+plugins/__pycache__/
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# docker
+*.env.local
+
