@@ -42,23 +42,27 @@ def get_video_id(playlist_id):
 
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems"
 
-    while True:
+    try:
 
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
+        while True:
 
-        for item in data.get('items', []):
-            video_id = item['contentDetails']['videoId']
-            video_id_list.append(video_id)
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
 
-        if "nextPageToken" in data:
-            params["PageToken"] = data["nextPageToken"]
-        else:
-            break;         
+            for item in data.get('items', []):
+                video_id = item['contentDetails']['videoId']
+                video_id_list.append(video_id)
 
-    return video_id_list
+            if "nextPageToken" in data:
+                params["PageToken"] = data["nextPageToken"]
+            else:
+                break;         
 
+        return video_id_list
+    
+    except requests.exceptions.RequestException as e:
+        raise e
 
 
 if __name__ == "__main__":
@@ -66,5 +70,5 @@ if __name__ == "__main__":
     print(playlist_id)
     video_list = get_video_id(playlist_id)
 
-
+# adding comments 
 
