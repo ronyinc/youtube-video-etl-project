@@ -46,7 +46,7 @@ def get_video_id(playlist_id):
 
         while True:
 
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, timeout=30)
             response.raise_for_status()
             data = response.json()
 
@@ -54,8 +54,10 @@ def get_video_id(playlist_id):
                 video_id = item['contentDetails']['videoId']
                 video_id_list.append(video_id)
 
+            print(f"fetch so far {len(video_id_list)} so far...")    
+
             if "nextPageToken" in data:
-                params["PageToken"] = data["nextPageToken"]
+                params["pageToken"] = data["nextPageToken"]
             else:
                 break;         
 
@@ -69,6 +71,7 @@ if __name__ == "__main__":
     playlist_id = get_playlist_id()
     print(playlist_id)
     video_list = get_video_id(playlist_id)
+    print(video_list[:100])
 
 # adding comments 
 
