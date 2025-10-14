@@ -14,16 +14,30 @@ df["hours"]   = df["duration"].str.extract(r"(\d+)H", expand=False)
 df["minutes"] = df["duration"].str.extract(r"(\d+)M", expand=False)
 df["seconds"] = df["duration"].str.extract(r"(\d+)S", expand=False)
 
+
 # 4) Fill missing with 0 and convert to integers
 for c in ["hours", "minutes", "seconds"]:
     df[c] = df[c].fillna(0).astype(int)
 
 # 5) Compute total seconds
-df["total_seconds"] = df["hours"] * 3600 + df["minutes"] * 60 + df["seconds"]
+df["duration_total_seconds"] = df["hours"] * 3600 + df["minutes"] * 60 + df["seconds"]
 
 # (Optional) choose/ordered columns for output if you like
-cols = [c for c in ["video_id","title","publishedAt","duration","hours","minutes","seconds","total_seconds"] if c in df.columns]
-df_out = df[cols] if cols else df
+# cols = [c for c in ["video_id","title","publishedAt","duration","hours","minutes","seconds","total_seconds"] if c in df.columns]
+# df_out = df[cols] if cols else df
+
+selected_cols = [
+    "video_id",
+    "title",
+    "publishedAt",
+    "duration",
+    "duration_total_seconds",
+    "viewCount",
+    "likeCount",
+    "commentCount" 
+]
+
+df_out = df[selected_cols]
 
 # 6) Write to a single CSV file
 output_dir = "./staging_files"
