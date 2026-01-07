@@ -66,8 +66,8 @@ def get_video_id(playlist_id):
             if "nextPageToken" in data:
                 params["pageToken"] = data["nextPageToken"]
             else:
-                break;         
-
+                break;
+                 
         return video_id_list
     
     except requests.exceptions.RequestException as e:

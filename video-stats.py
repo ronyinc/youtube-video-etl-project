@@ -21,6 +21,7 @@ def get_playlist_id():
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
+        # print(data)
         channel_items = data['items'][0]
         channel_playlistId = channel_items['contentDetails']['relatedPlaylists']['uploads']
         
@@ -61,7 +62,8 @@ def get_video_id(playlist_id):
             if "nextPageToken" in data:
                 params["pageToken"] = data["nextPageToken"]
             else:
-                break;         
+                break;
+        # print(video_id_list)         
 
         return video_id_list
     
@@ -109,6 +111,7 @@ def extract_video_data(video_id_list):
                 }
 
                 extracted_list.append(video_data)
+        print(extracted_list)        
         return extracted_list        
     
     except requests.exceptions.RequestException as e:
@@ -131,11 +134,11 @@ def load_data_as_csv(extracted_list):
 
 if __name__ == "__main__":
     playlist_id = get_playlist_id()
-    print(playlist_id)
+    # print(playlist_id)
     video_id_list = get_video_id(playlist_id)
-    print(video_id_list[:10])
+    # print(video_id_list[:10])
     extracted_video_details = extract_video_data(video_id_list)
-    load_data_as_csv(extracted_video_details)
+    # load_data_as_csv(extracted_video_details)
 
 # adding comments 
 

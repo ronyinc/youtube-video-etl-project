@@ -71,4 +71,3 @@ with DAG(
     t1 = PythonOperator(task_id="ensure_table", python_callable=ensure_table_exists)
     t2 = PythonOperator(task_id="load_csv", python_callable=load_csv_to_staging)    
     t1 >> t2
-
